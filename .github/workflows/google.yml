@@ -21,7 +21,7 @@ env:
   GKE_CLUSTER: wiki-scraper-autopilot-cluster
   GKE_ZONE: us-west1
   DEPLOYMENT_NAME: wikipedia-scraper-microservice
-  IMAGE: static-site
+  IMAGE: wikipedia-scraper-image
 
 jobs:
   setup-build-publish-deploy:
