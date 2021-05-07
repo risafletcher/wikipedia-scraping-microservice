@@ -1,23 +1,47 @@
 const express = require('express');
-const axios = require('axios');
+const wiki = require('wikipedia');
 const app = express();
 
-const { parseText } = require('./parser');
+const {
+    generateReferencesResult,
+    generateSummaryResult,
+    generateSearchResult,
+} = require('./formatters');
 
 app.get('/', (req, res) =>
-    res.send('Hello from App Engine!'));
+    res.send('Hello, world!'));
 
-app.get('/search/:searchQuery', async (req, res) => {
+app.get('/search/:searchQuery/summary', async (req, res, next) => {
     const { searchQuery } = req.params;
-    const scrapedResult = await axios.get(`https://en.wikipedia.org/wiki/${searchQuery}`);
-    if (scrapedResult.status === 200) {
-        res.send(parseText(scrapedResult.data));
-    } else {
-        //  fallback to wikimedia API
-        const wikimediaResult = await axios.get(`https://en.wikipedia.org/api/rest_v1/page/html/${searchQuery}`);
-        if (wikimediaResult.status === 200) {
-            res.send(parseText(wikimediaResult.data));
-        }
+    try {
+        const page = await wiki.page(searchQuery, { redirect: true });
+        const summaryResult = await generateSummaryResult(page);
+        res.send(summaryResult);
+    } catch (error) {
+        next(error);
+    }
+});
+
+app.get('/search/:searchQuery/references', async (req, res, next) => {
+    const { searchQuery } = req.params;
+    const { limit = 5 } = req.query;
+    try {
+        const page = await wiki.page(searchQuery, { redirect: true });
+        const referencesResult = await generateReferencesResult(page, limit);
+        res.send(referencesResult);
+    } catch (error) {
+        next(error);
+    }
+});
+    
+app.get('/search/:searchQuery', async (req, res, next) => {
+    const { searchQuery } = req.params;
+    try {
+        const page = await wiki.page(searchQuery, { redirect: true });
+        const searchResult = await generateSearchResult(page);
+        res.send(searchResult);
+    } catch (error) {
+        next(error);
     }
 });
 
