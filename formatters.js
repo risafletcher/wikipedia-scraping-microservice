@@ -23,10 +23,9 @@ const generateSearchResult = async (page = {}) => {
         intro: await page.intro(),
         summary: summary.extract,
         content: await page.content(),
-        tables: await page.tables({ redirect: false }),
         language: page.pagelanguage,
         languageDir: page.pagelanguagedir,
-        references: await page.references({ redirect: false, limit: 5 }),
+        // references: await page.references({ limit: 5 }) || [],   // TODO: find alternate fix
         url: page.fullurl,
     }
 };
