@@ -1,7 +1,9 @@
+const getReferences = require('./getReferences');
+
 const generateReferencesResult = async (page = {}, limit) => ({
     id: page.pageid,
     title: page.title,
-    references: await page.references({ limit }),
+    references: await getReferences(page, limit),
     language: page.pagelanguage,
 });
 
@@ -25,7 +27,7 @@ const generateSearchResult = async (page = {}) => {
         content: await page.content(),
         language: page.pagelanguage,
         languageDir: page.pagelanguagedir,
-        // references: await page.references({ limit: 5 }) || [],   // TODO: find alternate fix
+        references: await getReferences(page, limit),
         url: page.fullurl,
     }
 };
