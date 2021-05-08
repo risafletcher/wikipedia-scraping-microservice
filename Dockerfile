@@ -10,5 +10,4 @@ COPY . .
 
 RUN npm ci
 
-# start
 CMD ["npm", "start"]
