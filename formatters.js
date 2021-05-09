@@ -43,7 +43,7 @@ const generateSearchResult = async (page = {}) => {
         content: await page.content(),
         language: page.pagelanguage,
         languageDir: page.pagelanguagedir,
-        references: await getReferences(page, limit),
+        references: await getReferences(page),
         url: page.fullurl,
     }
 };
