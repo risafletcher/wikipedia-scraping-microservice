@@ -5,4 +5,4 @@ This service uses a third-party library to fetch and parse data from the Wikiped
 
 
 
-For documentation, please view the hosted OpenAPI docs: https://app.swaggerhub.com/apis/risafletcher/Wikipedia-Scraping-Service/1.0.0
+For documentation, please view the API contract in Swagger: https://app.swaggerhub.com/apis/risafletcher/Wikipedia-Scraping-Service/1.0.0
