@@ -1,5 +1,5 @@
 # Wikipedia Scraping Microservice
-https://wikipeda-scraping-svc.risa.dev
+https://wikipedia-scraping-svc.risa.dev
 
 This service uses a third-party library to fetch and parse data from the Wikipedia scraping API. The data is then formatted and includes extra error handling to improve reliability.
 
