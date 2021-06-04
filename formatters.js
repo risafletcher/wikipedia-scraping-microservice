@@ -25,11 +25,14 @@ const generateReferencesResult = async (page = {}, limit) => ({
 
 const generateSummaryResult = async (page = {}) => {
     const summary = await page.summary();
+    const images = await page.images({ limit: 5 });
+    const image = images.find(({ title }) => title.includes(page.title)) || images[0];
     return {
         id: page.pageid,
         title: page.title,
         summary: summary.extract,
         language: page.pagelanguage,
+        image,
     }
 };
 
@@ -39,6 +42,7 @@ const generateSearchResult = async (page = {}) => {
         id: page.pageid,
         title: page.title,
         intro: await page.intro(),
+        images: await page.images({ limit: 5 }),
         summary: summary.extract,
         content: await page.content(),
         language: page.pagelanguage,
